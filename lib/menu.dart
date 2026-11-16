@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class ItemHomepage {
   final String name;
   final IconData icon;
+  final Color color;
 
-  const ItemHomepage(this.name, this.icon);
+  const ItemHomepage(this.name, this.icon, this.color);
 }
 
 class MyHomePage extends StatelessWidget {
@@ -16,9 +17,9 @@ class MyHomePage extends StatelessWidget {
   final String kelas = "PBP C";
 
   final List<ItemHomepage> items = const [
-    ItemHomepage("Lihat Proyek", Icons.folder),
-    ItemHomepage("Tambah Proyek", Icons.add_circle),
-    ItemHomepage("Logout", Icons.logout),
+    ItemHomepage("Lihat Proyek", Icons.folder, Colors.blue),
+    ItemHomepage("Tambah Proyek", Icons.add_circle, Colors.green),
+    ItemHomepage("Logout", Icons.logout, Colors.deepOrange),
   ];
 
   @override
@@ -41,41 +42,41 @@ class MyHomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  InfoCard(title: 'NPM', content: npm),
-                  InfoCard(title: 'Name', content: nama),
-                  InfoCard(title: 'Class', content: kelas),
+                  Expanded(
+                    child: InfoCard(title: 'NPM', content: npm),
+                  ),
+                  Expanded(
+                    child: InfoCard(title: 'Name', content: nama),
+                  ),
+                  Expanded(
+                    child: InfoCard(title: 'Class', content: kelas),
+                  ),
                 ],
               ),
               const SizedBox(height: 16.0),
-              Center(
-                child: Column(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 16.0),
-                      child: Text(
-                        'Selamat datang di MyPortfolio Mobile!',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                        ),
-                      ),
-                    ),
-                    GridView.count(
-                      primary: false,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.all(20),
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      crossAxisCount: 3,
-                      shrinkWrap: true,
-                      children: items.map((ItemHomepage item) {
-                        return ItemCard(item);
-                      }).toList(),
-                    ),
-                  ],
+              const Padding(
+                padding: EdgeInsets.only(top: 16.0),
+                child: Text(
+                  'Selamat datang di MyPortfolio Mobile!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),
                 ),
+              ),
+              GridView.count(
+                primary: false,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(20),
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                crossAxisCount: 3,
+                shrinkWrap: true,
+                children: items.map((ItemHomepage item) {
+                  return ItemCard(item);
+                }).toList(),
               ),
             ],
           ),
@@ -100,8 +101,8 @@ class InfoCard extends StatelessWidget {
     return Card(
       elevation: 2.0,
       child: Container(
-        width: MediaQuery.of(context).size.width / 3.5,
-        padding: const EdgeInsets.all(16.0),
+        width: double.infinity,
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
             Text(
@@ -111,7 +112,10 @@ class InfoCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8.0),
-            Text(content),
+            Text(
+              content,
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
@@ -127,7 +131,7 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).colorScheme.secondary,
+      color: item.color,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
@@ -153,14 +157,13 @@ class ItemCard extends StatelessWidget {
                   color: Colors.white,
                   size: 30.0,
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(3),
-                ),
+                const SizedBox(height: 6),
                 Text(
                   item.name,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
