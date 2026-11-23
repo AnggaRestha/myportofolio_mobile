@@ -1,9 +1,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:myportofolio_mobile/screens/project_form.dart';
+import 'package:myportofolio_mobile/screens/experience_form.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
+
+  void _push(BuildContext context, Widget page) {
+    Navigator.of(context)
+      ..pop()
+      ..push(
+        MaterialPageRoute(builder: (_) => page),
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,29 +47,24 @@ class LeftDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.add_circle_outline),
-            title: const Text('Add Project'),
+            leading: const Icon(Icons.home_outlined),
+            title: const Text('Home'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ProjectFormPage(),
-                ),
-              );
+              Navigator.of(context).popUntil((route) => route.isFirst);
             },
           ),
           ListTile(
             leading: const Icon(Icons.add_circle_outline),
             title: const Text('Add Project'),
             onTap: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    'Halaman Add Project belum dibuat.',
-                  ),
-                ),
-              );
+              _push(context, const ProjectFormPage());
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.work_outline),
+            title: const Text('Add Experience'),
+            onTap: () {
+              _push(context, const ExperienceFormPage());
             },
           ),
         ],

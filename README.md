@@ -103,7 +103,7 @@ nah kapan harus memakai hot reload dan kapan harus makai hot restart atau full r
 
 ## AI Disclosure (Pengungkapan Penggunaan AI)
 
-Dalam pengerjaan tugas ini, saya menggunakan ChatGPT (OpenAI) sebagai alat bantu pembelajaran untuk mendukung pemahaman dan proses pengembangan aplikasi Flutter.
+Dalam pengerjaan tugas 7 ini, saya menggunakan ChatGPT (OpenAI) sebagai alat bantu pembelajaran untuk mendukung pemahaman dan proses pengembangan aplikasi Flutter.
 
 Penggunaan AI mencakup beberapa hal berikut:
 
@@ -112,3 +112,56 @@ Penggunaan AI mencakup beberapa hal berikut:
 3. Membantu mengidentifikasi serta menyelesaikan kendala atau kesalahan selama proses pengembangan aplikasi.
 
 Seluruh saran, penjelasan, dan kode yang dihasilkan oleh AI telah ditinjau, disesuaikan, dan diuji selama proses pengerjaan. Saya tetap bertanggung jawab atas hasil akhir, pemahaman materi, serta tugas yang dikumpulkan.
+
+
+TUGAS 8
+
+1. Jelaskan perbedaan antara Navigator.push(), Navigator.pushReplacement(), dan Navigator.pop(). Metode apa yang digunakan untuk membuka formulir dari kartu aksi? Jelaskan juga bagaimana opsi Home di drawer membawa pengguna kembali ke halaman utama.
+
+Jawab: 
+bedanya Navigator.push(), Navigator.pushReplacement(), dan Navigator.pop() itu berada pada proses pembukaan filenya.
+
+Kalo Navigator.push() dia ngebuka halaman baru dengan menambahkannya ke navigation stack, sehingga pengguna masih bisa kembali ke halaman sebelumnya menggunakan tombol Back.
+
+Kalo Navigator.pushReplacement() sudah jelas dia mengreplace halaman sebelumnya ketika membuka halaman baru sehingga pengguna tidak dapat kembali karna sudah digantikan dengan halaman baru
+
+terakhir ada Navigator.pop() dia berbeda dengan kedua tadi, dia hanya menutup halaman yang sedang aktif dan kembali ke halaman sebelumnya
+
+Sementara itu, opsi Home pada drawer menggunakan Navigator.popUntil((route) => route.isFirst) untuk menutup halaman-halaman di atas halaman utama dan membawa pengguna kembali ke halaman pertama aplikasi tanpa membuat halaman Home baru.
+
+2. Bagaimana susunan Scaffold, AppBar, dan Drawer membantu menjaga struktur halaman tetap konsisten? Berikan satu contoh penggunaan warna tema portofolio di lebih dari satu halaman.
+
+Jawaban:
+Scaffold itu ibarat kata seperti sholat yang menjadi pondasi utama dalam islam, dia yang mengatur AppBar, Drawer, dan Body. AppBar dipake untuk menampilkan judul, sedangkan Drawer dia menyediakan menu navigasi agar pengguna dapat berpindah halaman dengan gampang.
+
+Penggunaan ketiga widget tersebut membuat tampilan aplikasi MyPortfolio Mobile lebih konsisten karena setiap halaman memiliki struktur dan navigasi yang serupa.
+
+Contohnya, aku menggunakan warna indigo sebagai tema utama pada AppBar di halaman Add Project Form dan Add Experience Form. Kedua halaman menggunakan latar Colors.indigo dan teks berwarna putih sehingga tampilan aplikasi terlihat seragam dan sesuai dengan identitas visual portofolio
+
+3. Mengapa tata letak tersebut dipilih untuk formulir? Jelaskan peran widget pengatur jarak dan widget penggulir ketika ruang layar terbatas.
+
+Jawab: 
+Tata letak formulir pada aplikasiku dibuat dengan Column biar setiap input tersusun secara vertikal, rapi, dan mudah diisi oleh user. Selain itu, Padding dan SizedBox digunakan untuk memberikan jarak antarinput sehingga tampilan tidak terlalu rapat dan lebih nyaman digunakan.
+
+nah buat Widget SingleChildScrollView digunakan biar halaman formulir dapat digeser kebawah ketika ruang layar terbatas, misalnya pas aplikasi dibuka pada perangkat dengan layar kecil atau ketika keyboard muncul. Dengan demikian, seluruh kolom input dan tombol Simpan tetap dapat dijangkau pengguna tanpa menyebabkan masalah overflow pada tampilan.
+
+4. Apa peran GlobalKey<FormState>, validator, dan validate() saat tombol Simpan ditekan? Berikan satu contoh nilai yang ditolak oleh validasi dan jelaskan mengapa memilih jenis input atau papan ketik saja belum cukup.
+
+Jawab:
+GlobalKey<FormState> dipake untuk akses dan mengatur kondisi form, kalo validator digunakan untuk memeriksa apakah setiap input sudah sesuai dengan required yang ditentukan. nah ketika tombol Simpan ditekan, metod validate() akan menjalankan seluruh validator pada form. jika terdapat input yang ga valid, pesan kesalahan akan ditampilkan dan proses penyimpanan tidak dilanjutkan.
+
+Contohnya, pada formulir Add Experience, input Nama Perusahaan yang hanya berisi spasi akan ditolak karena setelah diperiksa menggunakan trim().isEmpty, nilainya dianggap kosong.
+
+Pemilihan jenis input atau papan ketik saja belum cukup karena hanya membantu pengguna memasukkan data, tetapi tidak menjamin data tersebut benar. Oleh karena itu, validasi tetap diperlukan untuk memastikan data sesuai dengan aturan, seperti input wajib diisi, panjang karakter, dan urutan tanggal yang benar.
+
+
+## AI Disclosure (Pengungkapan Penggunaan AI)
+
+Dalam pengerjaan tugas 8 ini, saya menggunakan ChatGPT (OpenAI) sebagai alat bantu pembelajaran untuk mendukung pemahaman dan proses pengembangan aplikasi Flutter.
+
+Ai sendiri aku pake untuk membantu diriku memahami beberapa intruksi tugas 8 ini seperti menyusun struktur kode buat Add Experience. disitu aku menggunakan Ai untuk bertanya beberapa best praktis dalam ngebuat form serta mengkompare dengan tutorial yang ada. dan aku menggunakan Ai juga untuk bikin validasi form dengan  GlobalKey<FormState> dan validator, dan implemen navigasi dengan Navigator.push() dan Drawer. dan ada beberapa common mistake yang terjadi pada tahap pembuatan tugasnya. 
+
+Intinya untuk seluruh code dan saran yang dikasih sama Ai selalu aku crosscheck terlebih dahulu sebelum digunakan. dan semua pengujian juga aku lakukan secara manual tanpa menggunakan Ai sedikitpun.
+
+Ai dipake hanya untuk alat bantu belajar, untuk proses implementasi dan pengujian serta tanggung jawab terhadap hasilnya nanti tetap berada di diriku sendiri.
+
