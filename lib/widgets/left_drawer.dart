@@ -1,7 +1,11 @@
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:myportofolio_mobile/screens/project_form.dart';
 import 'package:myportofolio_mobile/screens/experience_form.dart';
+import 'package:myportofolio_mobile/screens/login_screen.dart';
+import 'package:myportofolio_mobile/services/auth_state.dart';
+import 'package:myportofolio_mobile/widgets/auth_guard.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -9,13 +13,53 @@ class LeftDrawer extends StatelessWidget {
   void _push(BuildContext context, Widget page) {
     Navigator.of(context)
       ..pop()
-      ..push(
-        MaterialPageRoute(builder: (_) => page),
+      ..push(MaterialPageRoute(builder: (_) => page));
+  }
+
+  Future<void> _openProjectForm(BuildContext context) async {
+    Navigator.of(context).pop();
+
+    final allowed = await ensureLoggedIn(context);
+
+    if (!context.mounted || !allowed) return;
+
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => const ProjectFormPage()));
+  }
+
+  void _openLogin(BuildContext context) {
+    Navigator.of(context).pop();
+
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => const LoginScreen()));
+  }
+
+  Future<void> _logout(BuildContext context) async {
+    Navigator.of(context).pop();
+
+    try {
+      await context.read<AuthState>().logout();
+
+      if (!context.mounted) return;
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Successfully logged out.')));
+    } catch (_) {
+      if (!context.mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Session cleared, but server logout failed.'),
+        ),
       );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final isLoggedIn = context.watch<AuthState>().isLoggedIn;
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -38,10 +82,7 @@ class LeftDrawer extends StatelessWidget {
                 const SizedBox(height: 10),
                 const Text(
                   'Explore personal projects and experiences!',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                  ),
+                  style: TextStyle(fontSize: 15, color: Colors.white),
                 ),
               ],
             ),
@@ -56,9 +97,7 @@ class LeftDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.add_circle_outline),
             title: const Text('Add Project'),
-            onTap: () {
-              _push(context, const ProjectFormPage());
-            },
+            onTap: () => _openProjectForm(context),
           ),
           ListTile(
             leading: const Icon(Icons.work_outline),
@@ -67,6 +106,19 @@ class LeftDrawer extends StatelessWidget {
               _push(context, const ExperienceFormPage());
             },
           ),
+          const Divider(),
+          if (isLoggedIn)
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
+              onTap: () => _logout(context),
+            )
+          else
+            ListTile(
+              leading: const Icon(Icons.login),
+              title: const Text('Login'),
+              onTap: () => _openLogin(context),
+            ),
         ],
       ),
     );

@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+
 import '../widgets/left_drawer.dart';
 
 class ExperienceFormPage extends StatefulWidget {
@@ -125,10 +125,7 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
       appBar: AppBar(
         title: const Text(
           'Add Experience Form',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.indigo,
         foregroundColor: Colors.white,
@@ -193,7 +190,8 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                       maxLength: 500,
                       decoration: InputDecoration(
                         labelText: 'Deskripsi Pengalaman',
-                        hintText: 'Ceritakan pengalaman dan tanggung jawabmu...',
+                        hintText:
+                            'Ceritakan pengalaman dan tanggung jawabmu...',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
@@ -291,9 +289,7 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
                       onPressed: _saveExperience,
                       child: const Text(
                         'Simpan Pengalaman',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],

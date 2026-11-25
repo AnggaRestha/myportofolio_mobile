@@ -1,6 +1,9 @@
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:myportofolio_mobile/screens/menu.dart';
+import 'package:myportofolio_mobile/services/api_client.dart';
+import 'package:myportofolio_mobile/services/auth_state.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,16 +14,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MyPortfolio',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.indigo,
-          secondary: Colors.amber.shade700,
+    return MultiProvider(
+      providers: [
+        Provider<ApiClient>(create: (_) => ApiClient()),
+        ChangeNotifierProvider<AuthState>(
+          create: (context) => AuthState(context.read<ApiClient>()),
         ),
-        useMaterial3: true,
+      ],
+      child: MaterialApp(
+        title: 'MyPortfolio',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.indigo,
+            secondary: Colors.amber.shade700,
+          ),
+          useMaterial3: true,
+        ),
+        home: const MyHomePage(),
       ),
-      home: const MyHomePage(),
     );
   }
 }
